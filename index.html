@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Number Slider</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000; 
+            color: #fff; 
+            text-align: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.8);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #00ffcc; 
+        }
+
+        .slider-container {
+            margin: 20px auto;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #444;
+            border-radius: 5px;
+            outline: none;
+            transition: background 0.3s;
+        }
+
+        input[type="range"]:hover {
+            background: #666; 
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #00ffcc; 
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0px 4px 8px rgba(0, 255, 204, 0.5);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0px 4px 12px rgba(0, 255, 204, 0.8);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #00ffcc; 
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0px 4px 8px rgba(0, 255, 204, 0.5);
+        }
+
+        .phone-display {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffcc00; 
+        }
+
+        .submit-button {
+            margin-top: 20px;
+            background: #444; 
+            color: #00ffcc; 
+            border: 1px solid #00ffcc;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s, color 0.3s;
+        }
+
+        .submit-button:hover {
+            background: #00ffcc; 
+            color: #000; 
+            transform: scale(1.05);
+        }
+
+        .submit-message {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #ffcc00; 
+            font-weight: bold;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gimme Your Phone Number</h1>
+        <div class="slider-container">
+            <input 
+                type="range" 
+                min="6000000000" 
+                max="9999999999" 
+                value="7000000000" 
+                step="1" 
+                id="phoneSlider" 
+            >
+            <div class="phone-display" id="phoneDisplay">7000-000-000</div>
+        </div>
+        <button class="submit-button" id="submitButton">Take it</button>
+        <div class="submit-message" id="submitMessage">Thanks, will call you at night!</div>
+    </div>
+
+    <script>
+        const phoneSlider = document.getElementById('phoneSlider');
+        const phoneDisplay = document.getElementById('phoneDisplay');
+        const submitButton = document.getElementById('submitButton');
+        const submitMessage = document.getElementById('submitMessage');
+
+        
+        phoneSlider.addEventListener('input', () => {
+            const rawValue = phoneSlider.value;
+            const formattedPhone = `${rawValue.slice(0, 4)}-${rawValue.slice(4, 7)}-${rawValue.slice(7)}`;
+            phoneDisplay.textContent = formattedPhone;
+        });
+
+       
+        submitButton.addEventListener('click', () => {
+            const phoneNumber = phoneSlider.value;
+            localStorage.setItem('userPhoneNumber', phoneNumber);
+            submitMessage.style.display = 'block';
+            
+            
+            setTimeout(() => {
+                submitMessage.style.display = 'none';
+                phoneSlider.value = 7000000000; 
+                phoneDisplay.textContent = '7000-000-000'; 
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
